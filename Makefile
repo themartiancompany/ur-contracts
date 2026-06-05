@@ -182,9 +182,9 @@ contracts-deployments-hardhat-npm:
 contracts-npm:
 
 	make \
-	  contracts-sources-npm:
+	  contracts-sources-npm
 	make \
-	  contracts-deployments-config-npm:
+	  contracts-deployments-config-npm
 	make \
 	  contracts-deployments-solc-npm
 	make \

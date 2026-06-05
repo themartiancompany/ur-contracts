@@ -26,13 +26,14 @@
 
 SHELL=bash
 PREFIX ?= /usr/local
-_PROJECT=erc20-contracts
+_PROJECT=ur
+_PROJECT_NPM=$(PROJECT)-contracts
 _NAMESPACE=themartiancompany
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)
 USR_DIR=$(DESTDIR)$(PREFIX)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
-NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT)
+NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
 
 _INSTALL_FILE=\
@@ -55,7 +56,7 @@ NPM_FILES=\
   "COPYING" \
   "AUTHORS.rst" \
   "dist" \
-  "Token.sol" \
+  "contracts" \
   "data-get" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
@@ -67,7 +68,7 @@ MAN_FILES=\
   evm-contract-call \
   evm-contract-deployer-get
 
-all: build-npm build-scripts
+all: contracts build-npm
 
 check: eslint
 
@@ -80,30 +81,21 @@ eslint:
 	  eslint \
 	    "."
 
-install: install-scripts install-doc install-examples
+contracts:
 
-install-scripts:
-
-	$(_INSTALL_DIR) \
-	  "$(LIB_DIR)/nodejs/lib"
-	for _file in $(NPM_FILES); do
-	  $(_INSTALL_FILE) \
-	    "$${_file}" \
-	    "$(LIB_DIR)/nodejs/$${_file}"; \
-	  ln \
-	    -s \
-            "$(PREFIX)/lib/$(_PROJECT)/nodejs/$${_file}" \
-	    "$(LIB_DIR)/$${_file}" || \
-	  true; \
-	done
-	# ln \
-	#   -s \
-	#   "$(PREFIX)/lib/$(_PROJECT)/node/lib$(_PROJECT)" \
-	#   "$(LIB_DIR)/$(_PROJECT)-js" || \
-	# true
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "$(SOLIDITY_COMPILER_BACKEND)" \
+	  -w \
+	    "$(BUILD_DIR)"
 
 build-npm:
 
+	make \
+	  contracts
 	mkdir \
 	  -p \
 	  "build"; \
@@ -128,6 +120,92 @@ build-npm:
 	mv \
 	  "$(_PROJECT)-$${_version}.tgz" \
 	  ".."
+
+install: install-scripts install-doc install-examples
+
+install-scripts:
+
+	$(_INSTALL_DIR) \
+	  "$(LIB_DIR)/nodejs/lib"
+	for _file in $(NPM_FILES); do
+	  $(_INSTALL_FILE) \
+	    "$${_file}" \
+	    "$(LIB_DIR)/nodejs/$${_file}"; \
+	  ln \
+	    -s \
+            "$(PREFIX)/lib/$(_PROJECT)/nodejs/$${_file}" \
+	    "$(LIB_DIR)/$${_file}" || \
+	  true; \
+	done
+	# ln \
+	#   -s \
+	#   "$(PREFIX)/lib/$(_PROJECT)/node/lib$(_PROJECT)" \
+	#   "$(LIB_DIR)/$(_PROJECT)-js" || \
+	# true
+
+install-contracts-sources:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "$(SOLIDITY_COMPILER_BACKEND)" \
+	  -w \
+	    "$(BUILD_DIR)" \
+	  -o \
+	    "$(LIB_DIR)" \
+	  -l \
+	    "n" \
+	  install_sources
+
+install-contracts-deployments-config:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "$(SOLIDITY_COMPILER_BACKEND)" \
+	  -w \
+	    "$(BUILD_DIR)" \
+	  -o \
+	    "$(LIB_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments_config
+
+install-contracts-deployments-solc:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "solc" \
+	  -w \
+	    "$(BUILD_DIR)" \
+	  -o \
+	    "$(LIB_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments
+
+install-contracts-deployments-hardhat:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "hardhat" \
+	  -w \
+	    "$(BUILD_DIR)" \
+	  -o \
+	    "$(LIB_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments
 
 install-npm:
 

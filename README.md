@@ -25,33 +25,32 @@
 [comment]: <> (with this program.)
 [comment]: <> (If not, see <https://www.gnu.org/licenses/>.)
 
-# TOKEN
+# Ur contracts
 
-This is an ERC-20 smart contract by OpenZeppelin
-as far as I know merged in
-a single file.
-
-This repository contains resources to work with
-an ERC-20 smart contract on an Ethereum Virtual
-Machine compatible network.
+This repository contains
+[Ur](
+  https://github.com/themartiancompany/ur)
+Solidity contracts and the configuration
+for their deployments.
 
 In particular it contains a
 Javascript module which contains a load function
-for ERC-20 contracts data, such as the ERC-20
-contract source, its ABI and bytecode.
+for Ur contracts data, such as the
+source, its ABI and bytecode.
 
 The data is generated at package build time
 using
-[Solidity Compiler](
-  https://github.com/themartiancompany/solidity-compiler).
+[EVM Make](
+  https://github.com/themartiancompany/evm-make).
 
-# Build
+
+## Build
 
 To build the module one can use GNU Make
 
 ```bash
 make \
-  build-npm
+  all
 ```
 
 or npm
@@ -60,6 +59,28 @@ or npm
 npm \
   install
 ```
+
+## Installation
+
+After build you can run
+using GNU Make
+
+```bash
+make \
+  install-npm
+```
+
+On the Ur itself this package
+is called `ur-contracts` and it is
+part of the
+[`ur`](
+  https://github.com/themartiancompany/ur-ur)
+package, here linked at its Github
+mirror.
+
+The package has also been published on the
+[NPM Registry](
+  https://npmjs.com/package/ur-contracts)
 
 # License
 

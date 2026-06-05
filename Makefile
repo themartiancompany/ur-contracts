@@ -29,12 +29,14 @@ PREFIX ?= /usr/local
 _PROJECT=ur
 _PROJECT_NPM=$(PROJECT)-contracts
 _NAMESPACE=themartiancompany
+SOLIDITY_COMPILER_BACKEND ?= solc
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)
 USR_DIR=$(DESTDIR)$(PREFIX)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
 NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
+BUILD_DIR=build
 
 _INSTALL_FILE=\
   install \
@@ -247,4 +249,4 @@ install-doc:
 	  -t \
 	  $(DOC_DIR)
 
-.PHONY: check build-npm build-scripts install install-doc install-npm install-scripts shellcheck
+.PHONY: check build-npm build-scripts contracts install install-doc install-npm install-scripts shellcheck

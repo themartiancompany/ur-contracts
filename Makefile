@@ -36,6 +36,8 @@ BIN_DIR=$(DESTDIR)$(PREFIX)/bin
 LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
 NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
+BUILD_EVM_MAKE_DIR=evm-make-build
+BUILD_CONTRACTS_DIR=contract-build
 BUILD_DIR=build
 
 _INSTALL_FILE=\
@@ -57,13 +59,13 @@ NPM_FILES=\
   "README.md" \
   "COPYING" \
   "AUTHORS.rst" \
-  "dist" \
   "contracts" \
+  "dist" \
   "data-get" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
   "package.json" \
-  "webpack.config.cjs" \
+  "webpack.config.cjs"
 
 MAN_FILES=\
   evm-contract-bytecode-get \
@@ -92,7 +94,71 @@ contracts:
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
-	    "$(BUILD_DIR)"
+	    "$(BUILD_EVM_MAKE_DIR)"
+
+build-contracts-sources-npm:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "$(SOLIDITY_COMPILER_BACKEND)" \
+	  -w \
+	    "$(BUILD_EVM_MAKE_DIR)" \
+	  -o \
+	    "$(BUILD_CONTRACTS_DIR)" \
+	  -l \
+	    "n" \
+	  install_sources
+
+build-contracts-deployments-config-npm:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "$(SOLIDITY_COMPILER_BACKEND)" \
+	  -w \
+	    "$(BUILD_EVM_MAKE_DIR)" \
+	  -o \
+	    "$(BUILD_CONTRACTS_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments_config
+
+build-contracts-deployments-solc-npm:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "solc" \
+	  -w \
+	    "$(BUILD_EVM_MAKE_DIR)" \
+	  -o \
+	    "$(BUILD_CONTRACTS_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments
+
+build-contracts-deployments-hardhat-npm:
+
+	evm-make \
+	  -v \
+	  -C \
+	    . \
+	  -b \
+	    "hardhat" \
+	  -w \
+	    "$(BUILD_DIR)" \
+	  -o \
+	    "$(LIB_DIR)" \
+	  -l \
+	    "n" \
+	  install_deployments
 
 build-npm:
 

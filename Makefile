@@ -40,6 +40,25 @@ BUILD_EVM_MAKE_DIR=evm-make-build
 BUILD_CONTRACTS_DIR=contract-build
 BUILD_DIR=build
 
+CONTRACTS_TARGETS_ALL=\
+  contracts \
+  contracts-npm \
+  contracts-deployments-config-npm \
+  contracts-deployments-hardhat-npm \
+  contracts-deployments-solc-npm \
+  contracts-sources-npm
+PHONY_TARGETS=\
+  check \
+  $(CONTRACTS_TARGETS_ALL) \
+  npm \
+  build-scripts \
+  contracts \
+  install \
+  install-doc \
+  install-npm \
+  install-scripts \
+  shellcheck
+
 _INSTALL_FILE=\
   install \
     -vDm644
@@ -72,7 +91,7 @@ MAN_FILES=\
   evm-contract-call \
   evm-contract-deployer-get
 
-all: contracts build-npm
+all: contracts contracts-npm npm
 
 check: eslint
 
@@ -96,7 +115,7 @@ contracts:
 	  -w \
 	    "$(BUILD_EVM_MAKE_DIR)"
 
-build-contracts-sources-npm:
+contracts-sources-npm:
 
 	evm-make \
 	  -v \
@@ -112,7 +131,7 @@ build-contracts-sources-npm:
 	    "n" \
 	  install_sources
 
-build-contracts-deployments-config-npm:
+contracts-deployments-config-npm:
 
 	evm-make \
 	  -v \
@@ -128,7 +147,7 @@ build-contracts-deployments-config-npm:
 	    "n" \
 	  install_deployments_config
 
-build-contracts-deployments-solc-npm:
+contracts-deployments-solc-npm:
 
 	evm-make \
 	  -v \
@@ -144,7 +163,7 @@ build-contracts-deployments-solc-npm:
 	    "n" \
 	  install_deployments
 
-build-contracts-deployments-hardhat-npm:
+contracts-deployments-hardhat-npm:
 
 	evm-make \
 	  -v \
@@ -153,17 +172,30 @@ build-contracts-deployments-hardhat-npm:
 	  -b \
 	    "hardhat" \
 	  -w \
-	    "$(BUILD_DIR)" \
+	    "$(BUILD_EVM_MAKE_DIR)" \
 	  -o \
-	    "$(LIB_DIR)" \
+	    "$(BUILD_CONTRACTS_DIR)" \
 	  -l \
 	    "n" \
 	  install_deployments
 
-build-npm:
+contracts-npm:
+
+	make \
+	  contracts-sources-npm:
+	make \
+	  contracts-deployments-config-npm:
+	make \
+	  contracts-deployments-solc-npm
+	make \
+	  contracts-deployments-hardhat-npm
+
+npm:
 
 	make \
 	  contracts
+	make \
+	  contracts-npm
 	mkdir \
 	  -p \
 	  "build"; \
@@ -315,4 +347,4 @@ install-doc:
 	  -t \
 	  $(DOC_DIR)
 
-.PHONY: check build-npm build-scripts contracts install install-doc install-npm install-scripts shellcheck
+.PHONY: $(PHONY_TARGETS)

@@ -78,8 +78,6 @@ NPM_FILES=\
   "README.md" \
   "COPYING" \
   "AUTHORS.rst" \
-  "contracts" \
-  "deployments" \
   "dist" \
   "data-get" \
   "eslint.config.mjs" \
@@ -188,12 +186,12 @@ contracts-npm:
 
 npm:
 
-	SOLIDITY_COMPILER_BACKEND="solc" \
-	make \
-	  contracts
-	SOLIDITY_COMPILER_BACKEND="hardhat" \
-	make \
-	  contracts
+	# SOLIDITY_COMPILER_BACKEND="solc" \
+	# make \
+	#   contracts
+	# SOLIDITY_COMPILER_BACKEND="hardhat" \
+	# make \
+	#   contracts
 	make \
 	  contracts-npm
 	mkdir \
@@ -201,10 +199,11 @@ npm:
 	  "build"; \
 	cp \
 	  -r \
-	  "contracts-builds/"* \
+	  "contracts-build/"* \
 	  "build"
 	cp \
 	  -r \
+	  "Makefile" \
 	  $(NPM_FILES) \
 	  "build"; \
 	cd \
@@ -222,7 +221,7 @@ npm:
 	npm \
 	  pack; \
 	mv \
-	  "$(_PROJECT)-$${_version}.tgz" \
+	  "$(_PROJECT_NPM)-$${_version}.tgz" \
 	  ".."
 
 install: install-scripts install-doc install-examples

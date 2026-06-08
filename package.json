@@ -13,6 +13,7 @@
     "AUTHORS.rst",
     "COPYING",
     "README.md",
+    "Makefile",
     "contracts",
     "data-get",
     "dist",

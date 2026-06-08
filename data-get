@@ -85,11 +85,14 @@ function
     _output_type =
       "path";
   }
-  if ( _data_type == "address" ) {
+  const
+    _deployments_dir =
+      `deployments/${_contract_name}/${_chain_id}`;
+  if ( _data_type == "contract-address" ) {
     _path =
       _path_join( [
         __dirname,
-        `deployments/${_contract_name}/${_chain_id}/config.json`
+        `${deployments_dir}/config.json`
     ]);
   }
   else if ( _data_type == "abi" ) {
@@ -151,7 +154,25 @@ function
     else if ( _data_type == "compiler-output" ) {
       _data =
         _json_read(
-	  _path);
+          _path);
+    }
+    else if ( _data_type == "contract-address" ) {
+      _data =
+        _json_read(
+          _path)[
+            "contract-address"];
+    }
+    else if ( _data_type == "evm-version" ) {
+      _data =
+        _json_read(
+          _path)[
+            "evm-version"];
+    }
+    else if ( _data_type == "solc-version" ) {
+      _data =
+        _json_read(
+          _path)[
+            "solc-version"];
     }
     else {
       _msg =

@@ -27,7 +27,7 @@
 SHELL=bash
 PREFIX ?= /usr/local
 _PROJECT=ur
-_PROJECT_NPM=$(PROJECT)-contracts
+_PROJECT_NPM=$(_PROJECT)-contracts
 _NAMESPACE=themartiancompany
 SOLIDITY_COMPILER_BACKEND ?= solc
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)

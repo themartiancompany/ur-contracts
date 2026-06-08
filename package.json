@@ -16,8 +16,6 @@
     "contracts",
     "data-get",
     "dist",
-    "ur-contracts",
-    "lib",
     "package.json",
     "webpack.config.cjs"
   ],

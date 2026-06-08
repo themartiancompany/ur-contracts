@@ -188,6 +188,10 @@ contracts-npm:
 
 npm:
 
+	SOLIDITY_COMPILER_BACKEND="solc" \
+	make \
+	  contracts
+	SOLIDITY_COMPILER_BACKEND="hardhat" \
 	make \
 	  contracts
 	make \

@@ -82,8 +82,16 @@ function
   if (typeof(
         _output_type) == "undefined" ||
      _output_type == "" ) {
-    _output_type =
-      "path";
+    if ( _data_type == "contract-address" ||
+         _data_type == "evm-version" ||
+         _data_type == "solc-version" ) {
+      _output_type =
+        "object";
+    }
+    else {
+      _output_type =
+        "path";
+    }
   }
   const
     _deployments_dir =

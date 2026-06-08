@@ -55,15 +55,23 @@ function
   _data_get(
     _contract_name,
     _data_type,
-    _output_type) {
+    _output_type,
+    _chain_id,
+    _contract_version) {
   let
     _data,
     _path;
   if (typeof(
+        _chain_id) == "undefined" ||
+     _chain_id == "" ) {
+    _chain_id =
+      "100";
+  }
+  if (typeof(
         _contract_name) == "undefined" ||
      _contract_name == "" ) {
     _contract_name =
-      "Token";
+      "UserRepository";
   }
   if (typeof(
         _data_type) == "undefined" ||
@@ -77,7 +85,14 @@ function
     _output_type =
       "path";
   }
-  if ( _data_type == "abi" ) {
+  if ( _data_type == "address" ) {
+    _path =
+      _path_join( [
+        __dirname,
+        `deployments/${_contract_name}/${_chain_id}/config.json`
+    ]);
+  }
+  else if ( _data_type == "abi" ) {
     _path =
       _path_join( [
         __dirname,

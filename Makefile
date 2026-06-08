@@ -37,7 +37,7 @@ LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
 NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
 BUILD_EVM_MAKE_DIR=evm-make-build
-BUILD_CONTRACTS_DIR=contract-build
+BUILD_CONTRACTS_DIR=contracts-build
 BUILD_DIR=build
 
 CONTRACTS_TARGETS_ALL=\
@@ -79,17 +79,13 @@ NPM_FILES=\
   "COPYING" \
   "AUTHORS.rst" \
   "contracts" \
+  "deployments" \
   "dist" \
   "data-get" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
   "package.json" \
   "webpack.config.cjs"
-
-MAN_FILES=\
-  evm-contract-bytecode-get \
-  evm-contract-call \
-  evm-contract-deployer-get
 
 all: contracts contracts-npm npm
 
@@ -187,8 +183,8 @@ contracts-npm:
 	  contracts-deployments-config-npm
 	make \
 	  contracts-deployments-solc-npm
-	make \
-	  contracts-deployments-hardhat-npm
+	# make \
+	#   contracts-deployments-hardhat-npm
 
 npm:
 
@@ -199,6 +195,10 @@ npm:
 	mkdir \
 	  -p \
 	  "build"; \
+	cp \
+	  -r \
+	  "contracts-builds/"* \
+	  "build"
 	cp \
 	  -r \
 	  $(NPM_FILES) \

@@ -82,7 +82,7 @@
     "commonjs",
   "scripts": {
     "build-contracts":
-      "make contracts",
+      "make contracts-npm",
     "build-lib":
       "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details && mv 'data-get.js' 'dist/ur-contracts/ur-contracts.js'",
     "build":

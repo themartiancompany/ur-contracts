@@ -2,7 +2,7 @@
   "version":
     "0.0.2",
   "description":
-    "JavaScript programs and libraries to enable seamless development of native computer applications designed to interact with Ur user repository and application store.",
+    "JavaScript programs and libraries to enable seamless development of native computer applications designed to interact with Ur user repository and application store contracts.",
   "funding": {
     "type":
       "patreon",

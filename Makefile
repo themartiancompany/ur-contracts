@@ -85,6 +85,11 @@ NPM_FILES=\
   "package.json" \
   "webpack.config.cjs"
 
+CONTRACTS=\
+  "UserRepository" \
+  "UserRepositoryPublishers" \
+  "PackagePublishers"
+
 all: contracts contracts-npm npm
 
 check: eslint
@@ -103,7 +108,7 @@ contracts:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -114,7 +119,7 @@ contracts-sources-npm:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -130,7 +135,7 @@ contracts-deployments-config-npm:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -146,7 +151,7 @@ contracts-deployments-solc-npm:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "solc" \
 	  -w \
@@ -162,7 +167,7 @@ contracts-deployments-hardhat-npm:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "hardhat" \
 	  -w \
@@ -251,7 +256,7 @@ install-contracts-sources:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -267,7 +272,7 @@ install-contracts-deployments-config:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -283,7 +288,7 @@ install-contracts-deployments-solc:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "solc" \
 	  -w \
@@ -299,7 +304,7 @@ install-contracts-deployments-hardhat:
 	evm-make \
 	  -v \
 	  -C \
-	    . \
+	    "$${PWD}" \
 	  -b \
 	    "hardhat" \
 	  -w \

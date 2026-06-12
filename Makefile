@@ -109,6 +109,8 @@ contracts:
 	  -v \
 	  -C \
 	    "$${PWD}" \
+	  -p \
+	    "./" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -120,6 +122,8 @@ contracts-sources-npm:
 	  -v \
 	  -C \
 	    "$${PWD}" \
+	  -p \
+	    "./" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -136,6 +140,8 @@ contracts-deployments-config-npm:
 	  -v \
 	  -C \
 	    "$${PWD}" \
+	  -p \
+	    "./" \
 	  -b \
 	    "$(SOLIDITY_COMPILER_BACKEND)" \
 	  -w \
@@ -152,6 +158,8 @@ contracts-deployments-solc-npm:
 	  -v \
 	  -C \
 	    "$${PWD}" \
+	  -p \
+	    "./" \
 	  -b \
 	    "solc" \
 	  -w \
@@ -168,6 +176,8 @@ contracts-deployments-hardhat-npm:
 	  -v \
 	  -C \
 	    "$${PWD}" \
+	  -p \
+	    "./" \
 	  -b \
 	    "hardhat" \
 	  -w \
@@ -181,22 +191,22 @@ contracts-deployments-hardhat-npm:
 contracts-npm:
 
 	make \
-	  contracts-deployments-config-npm
-	make \
 	  contracts-deployments-solc-npm
 	make \
 	  contracts-deployments-hardhat-npm
+	make \
+	  contracts-deployments-config-npm
 	make \
 	  contracts-sources-npm
 
 npm:
 
-	# SOLIDITY_COMPILER_BACKEND="solc" \
-	# make \
-	#   contracts
-	# SOLIDITY_COMPILER_BACKEND="hardhat" \
-	# make \
-	#   contracts
+	SOLIDITY_COMPILER_BACKEND="solc" \
+	make \
+	  contracts
+	SOLIDITY_COMPILER_BACKEND="hardhat" \
+	make \
+	  contracts
 	make \
 	  contracts-npm
 	mkdir \

@@ -214,7 +214,7 @@ npm:
 	  "build"; \
 	cp \
 	  -r \
-	  "contracts-build/"* \
+	  "$(BUILD_CONTRACTS_DIR)/"* \
 	  "build"
 	cp \
 	  -r \
